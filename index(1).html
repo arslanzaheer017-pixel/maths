@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f322a">
+<title>For Miss Alina 📐</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#1f322a;
+  --panel:rgba(0,0,0,.22);
+  --chalk:#f2ecd9;
+  --yellow:#ffd98e;
+  --pink:#f4a8bd;
+  --blue:#a9d6e8;
+  --dim:#b9b39e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Kalam',cursive;
+  background-color:var(--board);
+  background-image:
+    radial-gradient(800px 480px at 50% 10%, rgba(255,255,255,.05), transparent 70%),
+    linear-gradient(rgba(242,236,217,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242,236,217,.05) 1px, transparent 1px);
+  background-size:auto, 38px 38px, 38px 38px;
+  color:var(--chalk);overflow:hidden;font-weight:300;
+}
+::selection{background:var(--yellow);color:var(--board)}
+
+/* ---------- floating math symbols (pure CSS) ---------- */
+.symbols{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.symbols span{
+  position:absolute;bottom:-50px;font-family:Georgia,serif;opacity:0;
+  animation:floatUp 11s linear infinite;
+}
+.symbols span:nth-child(1){left:7%;animation-delay:0s;font-size:20px;color:var(--yellow)}
+.symbols span:nth-child(2){left:18%;animation-delay:2.5s;font-size:14px;color:var(--pink)}
+.symbols span:nth-child(3){left:31%;animation-delay:5s;font-size:22px;color:var(--blue)}
+.symbols span:nth-child(4){left:45%;animation-delay:1s;font-size:15px;color:var(--chalk)}
+.symbols span:nth-child(5){left:58%;animation-delay:4s;font-size:24px;color:var(--yellow)}
+.symbols span:nth-child(6){left:70%;animation-delay:6.5s;font-size:14px;color:var(--blue)}
+.symbols span:nth-child(7){left:83%;animation-delay:3s;font-size:19px;color:var(--pink)}
+.symbols span:nth-child(8){left:93%;animation-delay:7s;font-size:15px;color:var(--chalk)}
+@keyframes floatUp{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  12%{opacity:.5}
+  85%{opacity:.5}
+  100%{transform:translateY(-108vh) rotate(40deg);opacity:0}
+}
+
+/* ---------- progress = ruler ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 20px 12px;text-align:center;
+  border-bottom:1px dashed rgba(242,236,217,.2)}
+.topbar .label{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:9px;font-weight:400}
+.bar{height:20px;max-width:340px;margin:0 auto;border-radius:4px;position:relative;
+  overflow:hidden;background:rgba(242,236,217,.1);border:1px solid rgba(242,236,217,.3)}
+.bar i{display:block;height:100%;width:10%;border-radius:3px;
+  background:linear-gradient(90deg,var(--yellow),var(--pink));transition:width .6s ease}
+/* ruler ticks — har 10% pe ek tick mark */
+.bar::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),rgba(31,50,42,.5) calc(10% - 2px) 10%)}
+
+/* ---------- steps ---------- */
+.stage{position:relative;z-index:10;height:100vh}
+.step{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:110px 24px 70px}
+.step.active{display:flex;animation:writeIn .55s ease both}
+@keyframes writeIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+.step-num{font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--yellow);font-weight:400;margin-bottom:16px}
+.step-icon{font-size:2.6rem;margin-bottom:14px;animation:bob 2.6s ease-in-out infinite;display:inline-block}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+h2{font-family:'Kalam',cursive;font-weight:700;font-size:clamp(1.35rem,5vw,2rem);
+  line-height:1.4;color:var(--chalk);margin-bottom:16px;
+  display:inline-block;padding:0 8px 10px;
+  border-bottom:3px dashed rgba(242,236,217,.35)}
+.step p{font-size:clamp(1rem,2.6vw,1.15rem);line-height:1.95;max-width:48ch;color:var(--dim)}
+.chalky{text-shadow:0 0 1px rgba(242,236,217,.5)}
+
+/* ---------- button: chalk outline ---------- */
+.btn{margin-top:34px;cursor:pointer;font-family:'Kalam',cursive;font-size:.95rem;
+  font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  background:transparent;color:var(--chalk);
+  border:2px dashed rgba(242,236,217,.7);border-radius:10px;padding:13px 44px;
+  transition:background .25s,color .25s,transform .25s}
+.btn:hover{background:var(--chalk);color:var(--board);border-style:solid;transform:translateY(-3px)}
+.btn:active{transform:translateY(0)}
+
+/* ---------- badges ---------- */
+.badges{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.badge{border:2px dashed;border-radius:10px;padding:9px 20px;font-size:.8rem;
+  letter-spacing:.15em;text-transform:uppercase;animation:writeIn .5s both;
+  background:var(--panel)}
+.badge:nth-child(1){color:var(--yellow);border-color:rgba(255,217,142,.6)}
+.badge:nth-child(2){color:var(--blue);border-color:rgba(169,214,232,.6);animation-delay:.12s}
+.badge:nth-child(3){color:var(--pink);border-color:rgba(244,168,189,.6);animation-delay:.24s}
+.badge:nth-child(4){color:var(--chalk);border-color:rgba(242,236,217,.6);animation-delay:.36s}
+
+/* ---------- theorem / proof ---------- */
+.proof{margin-top:24px;text-align:left;font-size:clamp(.92rem,2.4vw,1.05rem);line-height:2;
+  background:var(--panel);border:2px dashed rgba(242,236,217,.3);
+  border-radius:12px;padding:16px 28px;color:var(--dim);max-width:420px}
+.proof .thm{color:var(--yellow);font-weight:700}
+.proof .inf{color:var(--blue)}
+.proof .qed{color:var(--pink);font-weight:700}
+
+/* ---------- reveal: name circled in chalk ---------- */
+.grade-mark{color:var(--pink);font-family:'Caveat',cursive;font-weight:700;
+  font-size:1.5rem;margin-top:6px;transform:rotate(-4deg)}
+.big-name{font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(3.4rem,12vw,5.6rem);line-height:1.1;color:var(--yellow)}
+.circled{display:inline-block;border:3px solid rgba(255,217,142,.85);
+  border-radius:50% 45% 55% 50% / 55% 50% 50% 45%;
+  padding:10px 44px;transform:rotate(-2deg);
+  animation:circlePop .7s .3s cubic-bezier(.3,1.4,.4,1) both}
+@keyframes circlePop{from{transform:rotate(-2deg) scale(.6);opacity:0}
+  to{transform:rotate(-2deg) scale(1);opacity:1}}
+
+/* ---------- letter ---------- */
+.letter{max-width:480px;width:100%;background:var(--panel);
+  border:2px dashed rgba(242,236,217,.35);border-radius:14px;padding:34px 30px}
+.letter .who{font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:14px;font-weight:400}
+.letter .msg{font-size:1.02rem;line-height:2;color:var(--dim)}
+.letter .msg b{color:var(--blue);font-weight:400}
+.stamp{width:88px;height:88px;border:3px solid var(--pink);border-radius:50%;
+  color:var(--pink);display:flex;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-weight:700;font-size:1.9rem;
+  transform:rotate(-12deg);margin:24px auto 0;
+  box-shadow:inset 0 0 0 3px rgba(244,168,189,.2);
+  animation:stampIt .5s .9s cubic-bezier(.3,1.5,.4,1) both}
+@keyframes stampIt{from{transform:rotate(-12deg) scale(2.2);opacity:0}
+  to{transform:rotate(-12deg) scale(1);opacity:1}}
+
+/* ---------- finale ---------- */
+.with{font-size:1.05rem;color:var(--dim)}
+.sig{font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(3rem,10vw,4.4rem);color:var(--yellow);line-height:1.2}
+.final-note{margin-top:20px;font-size:.85rem;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--pink)}
+
+.hint{position:fixed;bottom:24px;left:0;right:0;text-align:center;z-index:40;
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(185,179,158,.5);
+  pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="symbols">
+  <span>π</span><span>√</span><span>∑</span><span>∞</span>
+  <span>Δ</span><span>÷</span><span>θ</span><span>±</span>
+</div>
+
+<div class="topbar">
+  <div class="label" id="pLabel">Problem 1 of 10</div>
+  <div class="bar"><i id="pBar"></i></div>
+</div>
+
+<main class="stage">
+
+  <section class="step active">
+    <div class="step-icon">🧮</div>
+    <div class="step-num">Problem 1 of 10</div>
+    <h2>A secret awaits&hellip;</h2>
+    <p>Ten little problems are written on this board<br>for someone truly special. Solve them all! <br><em>(No calculator needed 📐)</em></p>
+    <button class="btn">Start Solving</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">🌌</div>
+    <div class="step-num">Problem 2 of 10</div>
+    <h2>She speaks the language of the universe</h2>
+    <p>Mathematics is the language of the universe&hellip;<br>and she teaches it like poetry.</p>
+    <button class="btn">Next Problem</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">🔍</div>
+    <div class="step-num">Problem 3 of 10</div>
+    <h2>The first clue</h2>
+    <p>Her name begins with the very <b style="color:var(--yellow)">first</b> letter of the alphabet&hellip;<br>and for her students, she&rsquo;s always first too.</p>
+    <button class="btn">I think I know &hellip;</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">✏️</div>
+    <div class="step-num">Problem 4 of 10</div>
+    <h2>A truth about her</h2>
+    <p>Math teachers give us hard problems&hellip;<br>only because they see solvers in us<br>before we see it ourselves.</p>
+    <button class="btn">Next Problem</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">💫</div>
+    <div class="step-num">Problem 5 of 10</div>
+    <h2>Her superpowers</h2>
+    <div class="badges">
+      <span class="badge">Patience</span>
+      <span class="badge">Logic</span>
+      <span class="badge">Brilliance</span>
+      <span class="badge">Kindness</span>
+    </div>
+    <button class="btn">Next Problem</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">📜</div>
+    <div class="step-num">Problem 6 of 10</div>
+    <h2>Solve for &ldquo;best teacher&rdquo;</h2>
+    <div class="proof">
+      <span class="thm">Theorem:</span> Miss Alina is the best teacher.<br><br>
+      <span class="thm">Proof:</span><br>
+      &nbsp;&nbsp;her patience &rarr; <span class="inf">&infin;</span><br>
+      &nbsp;&nbsp;her kindness &rarr; <span class="inf">&infin;</span><br><br>
+      &nbsp;&nbsp;<span class="qed">&there4;</span> she is the best. <span class="qed">&nbsp;&#8718;</span>
+    </div>
+    <button class="btn">Q.E.D &mdash; Next</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">📐</div>
+    <div class="step-num">Problem 7 of 10</div>
+    <h2>Almost there&hellip;</h2>
+    <p>Just three problems away from the final answer.<br><em>(Hint: the answer is beautiful)</em></p>
+    <button class="btn">Show Answer</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">🎉</div>
+    <div class="step-num">Problem 8 of 10</div>
+    <h2>Happy Teacher's Day</h2>
+    <div class="circled"><span class="big-name chalky">Miss Alina</span></div>
+    <div class="grade-mark">&#10003; Correct! &mdash; 10/10</div>
+    <p style="margin-top:16px">Our beloved math teacher &mdash; one in a million. <b style="color:var(--pink);font-weight:400">(that&rsquo;s 0.0001% &mdash; she&rsquo;s rare!)</b></p>
+    <button class="btn">One More Thing &hellip;</button>
+  </section>
+
+  <section class="step">
+    <div class="step-num">Problem 9 of 10</div>
+    <div class="letter">
+      <div class="who">&#128211; A Letter of Gratitude</div>
+      <p class="msg">
+        Dear Miss Alina,<br><br>
+        Thank you for making numbers feel friendly and problems feel fun.
+        For your patience when we got confused, and for believing in us
+        before we believed in ourselves.<br><br>
+        You don&rsquo;t just teach math &mdash; <b>you teach us how to think.</b><br><br>
+        Today, and always, you are treasured. &#128206;
+      </p>
+      <div class="stamp">A+</div>
+    </div>
+    <button class="btn">The Final Problem</button>
+  </section>
+
+  <section class="step">
+    <div class="step-icon">⭐</div>
+    <div class="step-num">Problem 10 of 10 &mdash; Solved!</div>
+    <p class="with">Every problem solved. Every answer found.<br>This one was made with love &amp; respect, by</p>
+    <div class="sig">Arslan Zaheer</div>
+    <div class="final-note">Miss Alina &mdash; The Best Teacher Ever &#11088;</div>
+    <button class="btn">Solve Again</button>
+  </section>
+
+</main>
+
+<p class="hint">no calculator needed &#128206;</p>
+
+<script>
+(function(){
+  var steps = document.querySelectorAll('.step');
+  var TOTAL = steps.length;
+  var current = 0;
+
+  function updateProgress(){
+    document.getElementById('pBar').style.width = ((current+1)/TOTAL*100)+'%';
+    document.getElementById('pLabel').textContent = 'Problem '+(current+1)+' of '+TOTAL;
+    /* update in-step labels too */
+    steps[current].querySelector('.step-num').textContent =
+      'Problem '+(current+1)+' of 10'+(current===9?' \u2014 Solved!':'');
+  }
+
+  function go(next){
+    steps[current].classList.remove('active');
+    current = next;
+    steps[current].classList.add('active');
+    updateProgress();
+  }
+
+  steps.forEach(function(s, i){
+    var b = s.querySelector('.btn');
+    if(!b) return;
+    b.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(i === TOTAL-1){
+        steps[current].classList.remove('active');
+        current = 0;
+        steps[0].classList.add('active');
+        updateProgress();
+      } else {
+        go(i+1);
+      }
+    });
+  });
+
+  /* Enter / Space = next */
+  addEventListener('keydown', function(e){
+    if((e.key === 'Enter' || e.key === ' ') && current < TOTAL-1){
+      e.preventDefault();
+      go(current+1);
+    }
+  });
+
+  updateProgress();
+})();
+</script>
+</body>
+</html>
